@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="bbwt.css">
+    <link rel="stylesheet" href="liveClock.css">
+</head>
+<body>
+    <div class="allText"><h1><div id="clock"; class="clockFont"></div></h1>
+    <button onclick="goHome()">Go to home page</button>
+    </div>
+
+    <script>
+        function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    const timeString = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    const clockElement = document.getElementById('clock');
+    clockElement.textContent = timeString;
+}
+
+setInterval(updateClock, 1000);
+
+function goHome() {
+    window.location.href = "index.html"
+}
+    </script>
+</body>
+</html>

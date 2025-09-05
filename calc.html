@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator!</title>
+    <link rel="stylesheet" href="bbwt.css">
+</head>
+<body>
+    <h1>Welcome to a simple calculator!</h1>
+    <h2>To start click the start button.</h2>
+    <h1></h1>
+    <button onclick="num1 = parseFloat(prompt('What is the first number?')); mathType = prompt('What is the type of operation? (+, -, *, or /)'); num2 = parseFloat(prompt('Now, what is the last number?')); findAnswer()">Start!</button>
+    <h1></h1>
+    <button onclick="goHome()">Go to home page</button>
+    <script>
+        let num1 = 0;
+        let mathType = "a";
+        let num2 = 0;
+        let answer = "a"
+        function findAnswer(){
+            if (mathType === "+"){
+                answer = (num1 + num2)
+                alert(`The answer is ${answer}`)
+            } else if (mathType === "-"){
+                answer = (num1 - num2)
+                alert(`The answer is ${answer}`)
+            } else if (mathType === "*"){
+                answer = (num1 * num2)
+                alert(`The answer is ${answer}`)
+            } else if (mathType === "/"){
+                answer = (num1 / num2)
+                alert(`The answer is ${answer}`)
+            } else{
+                alert("Sorry something went wrong :(")
+            }
+            }
+            function goHome(){
+                window.location.href = "index.html";
+            }
+    </script>
+</body>
+</html>

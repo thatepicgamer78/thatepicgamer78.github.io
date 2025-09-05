@@ -1,0 +1,30 @@
+h1, h2, h3, h4, h5, h6, p {
+            color: white;
+            font-family: "Source Code Pro", sans-serif;
+            font-weight: 400;
+        }
+        html {
+            background-image: url("https://i.ibb.co/r2pSJpXj/vCU8z8a.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed; 
+            min-height: 100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .content-box {
+            text-align: center;
+            font-size: x-large;
+        }
+        .footer {
+            font-size: smaller;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        

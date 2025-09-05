@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Game</title>
+    <link rel="stylesheet" href="bbwt.css">
+</head>
+<body>
+    <h1>Welcome to the random number game!</h1>
+    <h2>The number will be between 1 and 100</h2>
+    <button onclick="startButtonClick()">Start</button>
+    <h3></h3>
+    <button onclick="goHome()">Go to home page</button>
+
+    <script>
+        let cancel = 0;
+        function randomNumber(min, max){
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function startButtonClick() {
+            cancel = 0;
+            let number = randomNumber(1, 100);
+            let guess = parseInt(prompt("Guess the number (1–100):"));
+
+            while (guess !== number) {
+                if (guess < number) {
+                    guess = parseInt(prompt("Too low! Try again:"));
+                } else if (guess > number) {
+                    guess = parseInt(prompt("Too high! Try again:"));
+                } else{
+                    alert("Sorry something went wrong")
+                    guess = number;
+                    cancel = 1;
+                }
+            }
+            if (cancel !== 1){
+                alert("Yay you won!");
+            }
+        }
+        function goHome(){
+                window.location.href = "index.html";
+            }
+    </script>
+</body>
+</html>
