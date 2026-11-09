@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="JKsites — a collection of projects, experiments, and little things built for fun.">
+  <title>JKsites — Projects & Experiments</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: rgba(18, 27, 49, .78);
+      --panel-hover: rgba(28, 41, 70, .92);
+      --line: rgba(173, 193, 236, .13);
+      --text: #f4f7ff;
+      --muted: #a6b1c9;
+      --accent: #8b9cff;
+      --accent-2: #65e0c1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 15% 5%, rgba(86, 102, 220, .22), transparent 36rem),
+        radial-gradient(ellipse at 90% 28%, rgba(47, 190, 164, .12), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 16, 32, .78);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.04em; font-size: 1.15rem; }
+    .brand-mark {
+      display: grid; place-items: center; width: 38px; height: 38px;
+      border-radius: 12px; color: #10172a; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 28px rgba(116, 142, 255, .25);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: .92rem; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-button {
+      padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px;
+      color: var(--text); background: rgba(255,255,255,.04);
+    }
+    .nav-links .nav-button:hover { border-color: rgba(139,156,255,.6); background: rgba(139,156,255,.1); }
+
+    .hero { padding: 104px 0 82px; position: relative; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; padding: 7px 12px;
+      border: 1px solid var(--line); border-radius: 999px;
+      color: #c4cfff; background: rgba(139,156,255,.08);
+      font-size: .78rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 14px var(--accent-2); }
+    h1 {
+      max-width: 800px; margin: 24px 0 18px;
+      font-size: clamp(3rem, 8vw, 6.4rem); line-height: .99;
+      letter-spacing: -.075em; font-weight: 850;
+    }
+    .gradient-text {
+      background: linear-gradient(100deg, #a8b5ff 12%, #7ce5d0 88%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-copy { max-width: 610px; margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.18rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 32px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 48px; padding: 0 19px; border-radius: 12px;
+      font-size: .94rem; font-weight: 750; transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #0b1020; background: linear-gradient(110deg, #a8b5ff, #75e4ce); box-shadow: 0 10px 30px rgba(117, 157, 240, .2); }
+    .button-secondary { border: 1px solid var(--line); background: rgba(255,255,255,.035); color: var(--text); }
+    .button-secondary:hover { border-color: rgba(139,156,255,.55); }
+
+    .section { padding: 30px 0 94px; scroll-margin-top: 100px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 25px; }
+    .section-kicker { margin: 0 0 7px; color: var(--accent-2); font-size: .75rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.055em; line-height: 1.1; }
+    .section-note { margin: 0; color: var(--muted); font-size: .9rem; }
+
+    .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .project-card {
+      min-height: 218px; padding: 23px; display: flex; flex-direction: column;
+      border: 1px solid var(--line); border-radius: 19px;
+      background: var(--panel); box-shadow: 0 16px 50px rgba(0,0,0,.12);
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(139,156,255,.45); background: var(--panel-hover); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .card-icon {
+      display: grid; place-items: center; width: 43px; height: 43px; border-radius: 13px;
+      background: rgba(139,156,255,.12); font-size: 1.25rem;
+    }
+    .card-arrow { color: #aab7d4; font-size: 1.2rem; }
+    .project-card h3 { margin: 20px 0 5px; font-size: 1.08rem; letter-spacing: -.025em; }
+    .project-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .card-label { margin-top: auto; padding-top: 19px; color: #9eacd0; font-size: .73rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center;
+      margin-bottom: 90px; padding: 32px; border: 1px solid var(--line); border-radius: 22px;
+      background: linear-gradient(120deg, rgba(139,156,255,.1), rgba(101,224,193,.045));
+    }
+    .about p { margin: 12px 0 0; color: var(--muted); }
+    .about-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat { padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: rgba(7,12,25,.28); }
+    .stat strong { display: block; font-size: 1.65rem; letter-spacing: -.05em; }
+    .stat span { color: var(--muted); font-size: .8rem; }
+
+    footer { border-top: 1px solid var(--line); padding: 25px 0 34px; color: var(--muted); font-size: .84rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    footer a { color: #c5ceff; }
+    footer a:hover { color: white; }
+
+    @media (max-width: 800px) {
+      .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .about { grid-template-columns: 1fr; }
+      .hero { padding-top: 78px; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 66px; }
+      .nav-links { gap: 13px; font-size: .82rem; }
+      .nav-links a:nth-child(2) { display: none; }
+      .nav-links .nav-button { padding: 8px 11px; }
+      .hero { padding: 70px 0 62px; }
+      .section-heading { display: block; }
+      .section-note { margin-top: 10px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 190px; }
+      .about { padding: 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="chattest.html" aria-label="JKsites home">
+        <span class="brand-mark">JK</span>
+        <span>JKsites</span>
+      </a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a class="nav-button" href="index.html">Classic homepage ↗</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> Personal web playground</div>
+      <h1>Ideas become<br><span class="gradient-text">little projects.</span></h1>
+      <p class="hero-copy">Welcome to JKsites — a collection of experiments, mini apps, and random things I've made just for fun. Have a look around.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#projects">Explore projects <span aria-hidden="true">↓</span></a>
+        <a class="button button-secondary" href="index.html">Visit the original site <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="section shell" id="projects">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">The collection</p>
+          <h2>Things I've made</h2>
+        </div>
+        <p class="section-note">Small projects. Big experimenting energy.</p>
+      </div>
+
+      <div class="project-grid">
+        <a class="project-card" href="calc.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">🧮</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Simple calculator</h3>
+          <p>A straightforward calculator for everyday number-crunching.</p>
+          <span class="card-label">Utility</span>
+        </a>
+        <a class="project-card" href="hotdog.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">🌭</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Hotdog clicker</h3>
+          <p>A very serious test of how many hotdogs you can click.</p>
+          <span class="card-label">Clicker game</span>
+        </a>
+        <a class="project-card" href="numGame.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">🎲</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Random number game</h3>
+          <p>A little game built around guessing what comes next.</p>
+          <span class="card-label">Mini game</span>
+        </a>
+        <a class="project-card" href="scc.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">🐱</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Smurf Cat Clicker</h3>
+          <p>The scratch project, now part of the JKsites collection.</p>
+          <span class="card-label">Scratch project</span>
+        </a>
+        <a class="project-card" href="liveClock.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">🕒</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Live Clock</h3>
+          <p>A simple live clock that keeps the current time on screen.</p>
+          <span class="card-label">Time tool</span>
+        </a>
+        <a class="project-card" href="writingtest.html">
+          <div class="card-top"><span class="card-icon" aria-hidden="true">📄</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+          <h3>Too much Lorem ipsum</h3>
+          <p>A page dedicated to a truly unnecessary amount of placeholder text.</p>
+          <span class="card-label">Experiment</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about shell" id="about">
+      <div>
+        <p class="section-kicker">A little about this place</p>
+        <h2>Made to learn.<br>Built for fun.</h2>
+        <p>JKsites is my corner of the internet for trying ideas, learning how things work, and sharing the projects that come out of it. This page is a fresh homepage concept — the original homepage is still there too.</p>
+      </div>
+      <div class="about-stats" aria-label="Site details">
+        <div class="stat"><strong>06</strong><span>Projects to explore</span></div>
+        <div class="stat"><strong>100%</strong><span>Made for fun</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner shell">
+      <span>© JKsites · Made for fun.</span>
+      <a href="index.html">Back to the classic homepage ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
