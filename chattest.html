@@ -189,6 +189,26 @@
     html[data-theme="light"] .project-card p, html[data-theme="light"] .info-card p { color: #606075; }
     html[data-theme="light"] footer { border-top-color: rgba(28,28,55,.12); color: #666679; }
 
+
+    /* Accent color themes */
+    :root { --theme-accent: #8585ff; --theme-accent-light: #a58bff; --theme-rgb: 133,133,255; }
+    .color-picker {
+      min-height: 42px; max-width: 142px; padding: 0 12px; border-radius: 12px;
+      color: #f4f3ff; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.13); cursor: pointer;
+    }
+    .color-picker:focus-visible { outline: 2px solid var(--theme-accent); outline-offset: 3px; }
+    .brand-mark { background: linear-gradient(140deg, var(--theme-accent-light), var(--theme-accent)); box-shadow: 0 3px 18px rgba(var(--theme-rgb),.22); }
+    .availability-dot { background: var(--theme-accent); box-shadow: 0 0 12px rgba(var(--theme-rgb),.75); }
+    .hero-title-accent { background: linear-gradient(100deg, var(--theme-accent) 6%, var(--theme-accent-light) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .button-primary { background: linear-gradient(115deg, var(--theme-accent-light), var(--theme-accent)); box-shadow: 0 9px 26px rgba(var(--theme-rgb),.2); }
+    .button-primary:hover { box-shadow: 0 12px 32px rgba(var(--theme-rgb),.34); }
+    .kicker, .github-link, footer a { color: var(--theme-accent); }
+    .project-card:hover { border-color: rgba(var(--theme-rgb),.45); }
+    .card-icon { background: rgba(var(--theme-rgb),.13); }
+    .tag { color: var(--theme-accent-light); border-color: rgba(var(--theme-rgb),.25); background: rgba(var(--theme-rgb),.08); }
+    html[data-theme="light"] .color-picker { color: #28283a; background: rgba(255,255,255,.75); border-color: rgba(28,28,55,.16); }
+
     @media (max-width: 900px) {
       .decor-ring { right: -2%; width: 130px; height: 130px; top: 245px; }
       .decor-tile { left: -3%; width: 64px; height: 64px; }
@@ -232,7 +252,9 @@
         <a href="#uses">Uses</a>
         <a href="https://github.com/thatepicgamer78" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
-      <div class="nav-end">
+      <div class="nav-end" style="display:flex;align-items:center;gap:9px">
+        <label for="colorPicker" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Website color</label>
+        <select class="color-picker" id="colorPicker" aria-label="Choose website color"><option value="purple">Purple</option><option value="blue">Blue</option><option value="cyan">Cyan</option><option value="green">Green</option><option value="orange">Orange</option><option value="red">Red</option><option value="pink">Pink</option><option value="teal">Teal</option></select>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle light and dark theme">☾</button>
       </div>
     </nav>
@@ -317,6 +339,31 @@
 
   <script>
     const toggle = document.getElementById("themeToggle");
+    const colorPicker = document.getElementById("colorPicker");
+    const colorThemes = {
+      purple: ["#8585ff", "#b18aff", "133,133,255"],
+      blue: ["#4f8cff", "#83b5ff", "79,140,255"],
+      cyan: ["#20b9d5", "#70e1ef", "32,185,213"],
+      green: ["#35b879", "#83e6ad", "53,184,121"],
+      orange: ["#ed963e", "#ffc078", "237,150,62"],
+      red: ["#ed5b68", "#ff9299", "237,91,104"],
+      pink: ["#e56bb4", "#ff9bd3", "229,107,180"],
+      teal: ["#26b6a5", "#78e2d2", "38,182,165"]
+    };
+    function applyColorTheme(name) {
+      const colors = colorThemes[name] || colorThemes.purple;
+      const root = document.documentElement;
+      root.style.setProperty("--theme-accent", colors[0]);
+      root.style.setProperty("--theme-accent-light", colors[1]);
+      root.style.setProperty("--theme-rgb", colors[2]);
+      colorPicker.value = colorThemes[name] ? name : "purple";
+    }
+    const savedColor = localStorage.getItem("jksites-color-theme") || "purple";
+    applyColorTheme(savedColor);
+    colorPicker.addEventListener("change", () => {
+      applyColorTheme(colorPicker.value);
+      localStorage.setItem("jksites-color-theme", colorPicker.value);
+    });
     toggle.addEventListener("click", () => {
       const light = document.documentElement.dataset.theme !== "light";
       if (light) {
