@@ -28,9 +28,9 @@
       min-height: 100vh;
       color: var(--text);
       background:
-        radial-gradient(ellipse 38rem 28rem at 19% 19%, rgba(109, 91, 220, .23), transparent 72%),
-        radial-gradient(ellipse 34rem 26rem at 51% 76%, rgba(0, 125, 164, .16), transparent 72%),
-        radial-gradient(ellipse 42rem 28rem at 91% 28%, rgba(94, 68, 176, .10), transparent 72%),
+        radial-gradient(ellipse 38rem 28rem at 19% 19%, var(--bg-glow-1), transparent 72%),
+        radial-gradient(ellipse 34rem 26rem at 51% 76%, var(--bg-glow-2), transparent 72%),
+        radial-gradient(ellipse 42rem 28rem at 91% 28%, var(--bg-glow-3), transparent 72%),
         var(--bg);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.55;
@@ -74,12 +74,12 @@
     .hero::before {
       content: ""; position: absolute; z-index: -1; width: 470px; height: 470px;
       left: -270px; top: 35px; border-radius: 50%;
-      background: rgba(104,94,225,.17); filter: blur(100px); pointer-events: none;
+      background: rgba(var(--theme-rgb),.17); filter: blur(100px); pointer-events: none;
     }
     .hero::after {
       content: ""; position: absolute; z-index: -1; width: 490px; height: 390px;
       right: -245px; top: 205px; border-radius: 50%;
-      background: rgba(111,83,207,.12); filter: blur(105px); pointer-events: none;
+      background: rgba(var(--theme-rgb),.12); filter: blur(105px); pointer-events: none;
     }
     .availability {
       display: inline-flex; align-items: center; gap: 9px;
@@ -112,15 +112,15 @@
 
     .decor-ring {
       position: absolute; right: 1%; top: 220px; width: 185px; height: 185px;
-      border: 1px solid rgba(138,119,255,.36); border-radius: 50%;
-      box-shadow: inset 0 0 45px rgba(125,105,242,.035), 0 0 45px rgba(125,105,242,.035);
+      border: 1px solid rgba(var(--theme-rgb),.36); border-radius: 50%;
+      box-shadow: inset 0 0 45px rgba(var(--theme-rgb),.035), 0 0 45px rgba(var(--theme-rgb),.035);
       pointer-events: none;
     }
     .decor-tile {
       position: absolute; left: -17%; top: 465px; width: 84px; height: 84px;
-      border: 1px solid rgba(147,119,255,.42); border-radius: 17px;
-      background: rgba(106,91,210,.09); transform: rotate(9deg);
-      box-shadow: 0 0 28px rgba(119,100,255,.08); pointer-events: none;
+      border: 1px solid rgba(var(--theme-rgb),.42); border-radius: 17px;
+      background: rgba(var(--theme-rgb),.09); transform: rotate(9deg);
+      box-shadow: 0 0 28px rgba(var(--theme-rgb),.08); pointer-events: none;
     }
 
     .stats {
@@ -171,8 +171,8 @@
     }
     html[data-theme="light"] body {
       background:
-        radial-gradient(ellipse 38rem 28rem at 19% 19%, rgba(109,91,220,.16), transparent 72%),
-        radial-gradient(ellipse 34rem 26rem at 51% 76%, rgba(0,125,164,.10), transparent 72%),
+        radial-gradient(ellipse 38rem 28rem at 19% 19%, var(--light-bg-glow-1), transparent 72%),
+        radial-gradient(ellipse 34rem 26rem at 51% 76%, var(--light-bg-glow-2), transparent 72%),
         #f2f2fb;
       color: #171725;
     }
@@ -191,7 +191,16 @@
 
 
     /* Accent color themes */
-    :root { --theme-accent: #8585ff; --theme-accent-light: #a58bff; --theme-rgb: 133,133,255; }
+    :root {
+      --theme-accent: #8585ff;
+      --theme-accent-light: #a58bff;
+      --theme-rgb: 133,133,255;
+      --bg-glow-1: rgba(109,91,220,.23);
+      --bg-glow-2: rgba(0,125,164,.16);
+      --bg-glow-3: rgba(94,68,176,.10);
+      --light-bg-glow-1: rgba(109,91,220,.16);
+      --light-bg-glow-2: rgba(0,125,164,.10);
+    }
     .color-picker {
       min-height: 42px; max-width: 142px; padding: 0 12px; border-radius: 12px;
       color: #f4f3ff; background: rgba(255,255,255,.07);
@@ -341,21 +350,58 @@
     const toggle = document.getElementById("themeToggle");
     const colorPicker = document.getElementById("colorPicker");
     const colorThemes = {
-      purple: ["#8585ff", "#b18aff", "133,133,255"],
-      blue: ["#4f8cff", "#83b5ff", "79,140,255"],
-      cyan: ["#20b9d5", "#70e1ef", "32,185,213"],
-      green: ["#35b879", "#83e6ad", "53,184,121"],
-      orange: ["#ed963e", "#ffc078", "237,150,62"],
-      red: ["#ed5b68", "#ff9299", "237,91,104"],
-      pink: ["#e56bb4", "#ff9bd3", "229,107,180"],
-      teal: ["#26b6a5", "#78e2d2", "38,182,165"]
+      purple: {
+        accent: "#8585ff", light: "#b18aff", rgb: "133,133,255",
+        bg1: "rgba(109,91,220,.23)", bg2: "rgba(0,125,164,.16)", bg3: "rgba(94,68,176,.10)",
+        lightBg1: "rgba(109,91,220,.16)", lightBg2: "rgba(0,125,164,.10)"
+      },
+      blue: {
+        accent: "#4f8cff", light: "#83b5ff", rgb: "79,140,255",
+        bg1: "rgba(48,103,219,.24)", bg2: "rgba(0,139,190,.16)", bg3: "rgba(65,83,180,.11)",
+        lightBg1: "rgba(48,103,219,.16)", lightBg2: "rgba(0,139,190,.10)"
+      },
+      cyan: {
+        accent: "#20b9d5", light: "#70e1ef", rgb: "32,185,213",
+        bg1: "rgba(18,157,190,.23)", bg2: "rgba(0,183,189,.16)", bg3: "rgba(40,112,180,.11)",
+        lightBg1: "rgba(18,157,190,.15)", lightBg2: "rgba(0,183,189,.10)"
+      },
+      green: {
+        accent: "#35b879", light: "#83e6ad", rgb: "53,184,121",
+        bg1: "rgba(36,151,93,.23)", bg2: "rgba(0,137,132,.15)", bg3: "rgba(75,133,90,.11)",
+        lightBg1: "rgba(36,151,93,.15)", lightBg2: "rgba(0,137,132,.10)"
+      },
+      orange: {
+        accent: "#ed963e", light: "#ffc078", rgb: "237,150,62",
+        bg1: "rgba(196,108,32,.23)", bg2: "rgba(187,104,35,.15)", bg3: "rgba(153,75,43,.11)",
+        lightBg1: "rgba(196,108,32,.15)", lightBg2: "rgba(187,104,35,.10)"
+      },
+      red: {
+        accent: "#ed5b68", light: "#ff9299", rgb: "237,91,104",
+        bg1: "rgba(190,54,75,.23)", bg2: "rgba(172,66,91,.15)", bg3: "rgba(132,48,93,.11)",
+        lightBg1: "rgba(190,54,75,.15)", lightBg2: "rgba(172,66,91,.10)"
+      },
+      pink: {
+        accent: "#e56bb4", light: "#ff9bd3", rgb: "229,107,180",
+        bg1: "rgba(190,73,143,.23)", bg2: "rgba(166,78,160,.15)", bg3: "rgba(126,61,145,.11)",
+        lightBg1: "rgba(190,73,143,.15)", lightBg2: "rgba(166,78,160,.10)"
+      },
+      teal: {
+        accent: "#26b6a5", light: "#78e2d2", rgb: "38,182,165",
+        bg1: "rgba(22,139,132,.23)", bg2: "rgba(0,151,160,.16)", bg3: "rgba(39,105,139,.11)",
+        lightBg1: "rgba(22,139,132,.15)", lightBg2: "rgba(0,151,160,.10)"
+      }
     };
     function applyColorTheme(name) {
       const colors = colorThemes[name] || colorThemes.purple;
       const root = document.documentElement;
-      root.style.setProperty("--theme-accent", colors[0]);
-      root.style.setProperty("--theme-accent-light", colors[1]);
-      root.style.setProperty("--theme-rgb", colors[2]);
+      root.style.setProperty("--theme-accent", colors.accent);
+      root.style.setProperty("--theme-accent-light", colors.light);
+      root.style.setProperty("--theme-rgb", colors.rgb);
+      root.style.setProperty("--bg-glow-1", colors.bg1);
+      root.style.setProperty("--bg-glow-2", colors.bg2);
+      root.style.setProperty("--bg-glow-3", colors.bg3);
+      root.style.setProperty("--light-bg-glow-1", colors.lightBg1);
+      root.style.setProperty("--light-bg-glow-2", colors.lightBg2);
       colorPicker.value = colorThemes[name] ? name : "purple";
     }
     const savedColor = localStorage.getItem("jksites-color-theme") || "purple";
